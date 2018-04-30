@@ -12,15 +12,17 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function home()
-     {
-       return view('vueApp');
-     }
+
     public function index()
     {
-      return Post::orderBy('id','DESC')->get();
+      //return "i am index";
+    return Post::orderBy('id','DESC')->get();
     }
-
+    public function home()
+    {
+      //return "i am home";
+     return view('vueApp');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -28,7 +30,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return "i am created";
     }
 
     /**
