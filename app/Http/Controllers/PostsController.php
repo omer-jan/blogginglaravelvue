@@ -41,18 +41,29 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      $this->validate($request,[
+        'title'=>'required',
+        'body'=>'required'
+      ]);
+
+
+         $post=new Post;
+         $post->title=$request->title;
+         $post->body=$request->body;
+         $post->save();
+        return response()->json(['status'=>'success','msg'=>'post created successfully']);
     }
 
     /**
-     * Display the specified resource.
+     *  Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        return Post::find($id);
     }
 
     /**
@@ -63,7 +74,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+            return Post::find($id);
     }
 
     /**
@@ -75,7 +86,24 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+      $this->validate($request,[
+        'title'=>'required',
+        'body'=>'required'
+      ]);
+      $post=Post::find($id);
+      if($post->count())
+      {
+
+        $post->title=$request->title;
+        $post->body=$request->body;
+        $post->save();
+        return response()->json(['status'=>'sucess','msg'=>'Post Updated Sucessfully']);
+      }
+      else {
+        return response()->json(['status'=>'error','msg'=>'something goes wrong']);
+      }
+
     }
 
     /**
@@ -86,6 +114,17 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    $post =Post::find($id);
+      if($post->count())
+      {
+        $post->delete();
+        return response()->json(['status'=>'sucess','msg'=>'Post Deleted Sucessfully']);
+      }
+      else {
+
+        return response()->json(['status'=>'error','msg'=>'something goes wrong']);
+      }
+
     }
 }
